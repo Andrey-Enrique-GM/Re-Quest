@@ -4,37 +4,46 @@ from flask_login import LoginManager, current_user, login_user, login_required, 
 from dotenv import load_dotenv
 import os
 
+# Cargar las variables de entorno desde el archivo .env
 load_dotenv()
 
+# Configuración de la aplicación Flask
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 
+# Configuración de Flask-Login
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "index"
 
 
+
+# Función para cargar el usuario a partir de su ID, requerida por Flask-Login
 @login_manager.user_loader
 def load_user(id_user):
     return User.get_by_id(id_user)
 
 
+# Rutas de la aplicación
 @app.route('/')
 def index():
     return render_template('index.html')
 
 
+# Ruta para la página de registro de usuarios
 @app.route("/signup")
 def signup():
     return render_template("signup.html")
 
 
+# Ruta para la página de bienvenida después de iniciar sesión
 @app.route('/welcome', methods=["GET"])
 @login_required
 def welcome():
     return render_template("welcome.html")
 
 
+# Ruta para crear un nuevo usuario a través de una solicitud POST
 @app.route('/api/users', methods=["POST"])
 def create_user():
     data = request.get_json()
@@ -51,6 +60,8 @@ def create_user():
     else:
         return jsonify({"success": False, "message": "Ocurrió un error al crear su cuenta. Intente de nuevo"}), 500
 
+
+# Ruta para iniciar sesión a través de una solicitud POST
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -81,59 +92,14 @@ def login():
         }), 401
 
 
+# Ruta para cerrar sesión
 @app.route("/logout")
 @login_required
 def logout():
     logout_user()
     return redirect(url_for("index"))
 
-"""@app.route("/api/welcome", methods=["GET"])
-@login_required
-def check_account():
-    user_id = int(request.cookies.get("id"))
-    has_account = Account.check_account(user_id)
 
-    return jsonify({"has_account": has_account}), 200
-"""
-
-
+# Ejecutar la aplicación Flask
 if __name__ == '__main__':
     app.run()
-
-
-
-
-
-
-'''
-app = Flask(__name__)
-
-@app.route('/')
-def index():
-    return render_template('index.html')
-
-
-@app.route('/signup')
-def signup():
-    return render_template('signup.html')
-
-
-@app.route('/login')
-def login():
-    # Dejare el is_active para mas tarde por mi salud mental
-    return render_template('login.html')
-
-
-@app.route('/welcome')
-def welcome():
-    return render_template('welcome.html')
-
-
-@app.route('/api/login', methods=['POST'])
-def api_login():
-    return jsonify({'success': True})
-
-
-if __name__ == '__main__':
-    app.run()
-'''
