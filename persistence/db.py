@@ -2,7 +2,7 @@ import pymysql
 
 def get_connection():
     return pymysql.connect(
-        host="jdbc:mysql://34.30.245.236:3306/requestDB",
+        host="34.30.245.236",
         user="andrey",
         password="andrey",
         database="requestDB",
