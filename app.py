@@ -100,6 +100,13 @@ def logout():
     return redirect(url_for("index"))
 
 
+# Ruta para la página del juego
+@app.route('/game', methods=["GET"])
+@login_required
+def game():
+    return render_template("game.html")
+
+
 # Ejecutar la aplicación Flask
 if __name__ == '__main__':
     app.run()
