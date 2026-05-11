@@ -80,27 +80,24 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // 3. Control de Vidas
     function perderVida() {
-        if (vidas > 0) {
-            vidas--;
-            uiVidas.innerText = vidas;
+    if (vidas > 0) {
+        vidas--;
+        uiVidas.innerText = vidas;
+        
+        inputRespuesta.classList.add('is-invalid', 'border-danger');
+        setTimeout(() => inputRespuesta.classList.remove('is-invalid', 'border-danger'), 800);
+        
+        if (vidas === 0) {
             
             
-            inputRespuesta.classList.add('is-invalid', 'border-danger');
-            setTimeout(() => inputRespuesta.classList.remove('is-invalid', 'border-danger'), 800);
+            const gameOverContainer = document.getElementById('game-over-container');
+            gameOverContainer.style.display = 'flex';
             
-            if (vidas === 0) {
-                uiFrase.innerText = "¡Fin del juego!";
-                inputRespuesta.disabled = true;
-                btnAdivinar.disabled = true;
-                
-                if (typeof Swal !== 'undefined') {
-                    Swal.fire('¡Game Over!', 'Te has quedado sin vidas.', 'error');
-                } else {
-                    alert('¡Game Over! Te has quedado sin vidas.');
-                }
-            }
+            inputRespuesta.disabled = true;
+            btnAdivinar.disabled = true;
         }
     }
+}
 
     // Permitir enviar con la tecla "Enter"
     inputRespuesta.addEventListener('keypress', function (e) {
