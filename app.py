@@ -4,6 +4,8 @@ from flask_login import LoginManager, current_user, login_user, login_required, 
 from dotenv import load_dotenv
 import os
 
+from entities.word import Word
+
 # Cargar las variables de entorno desde el archivo .env
 load_dotenv()
 
@@ -111,6 +113,39 @@ def game():
 @app.route('/nivel1')
 def nivel1():
     return render_template("nivel1.html")
+
+
+
+@app.route('/api/juego/palabra/<int:word_id>', methods=['GET'])
+def obtener_pista(word_id):
+    
+    palabra = Word.wordbyId(word_id)
+    
+    if palabra:
+        return jsonify({
+            'status': 'ok',
+            'phrase': palabra.phrase 
+        })
+    else:
+        return jsonify({'status': 'fin'}), 404
+
+@app.route('/api/juego/validar', methods=['POST'])
+def validar_intento():
+    data = request.json
+    word_id = data.get('id')
+    intento_usuario = data.get('intento', '').strip().lower()
+
+    palabra = Word.wordbyId(word_id)
+    
+    if not palabra:
+        return jsonify({'error': 'Palabra no encontrada'}), 404
+
+    palabra_real = palabra.word.lower()
+
+    if intento_usuario == palabra_real:
+        return jsonify({'correcto': True})
+    else:
+        return jsonify({'correcto': False})
 
 
 

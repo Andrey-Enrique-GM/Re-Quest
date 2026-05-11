@@ -120,14 +120,20 @@
                                     <div class="card-body p-4">
                                         
                                         <!-- HUD (Vidas, Puntos, Controles extra) -->
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <span class="badge bg-danger fs-6 px-3 py-2 rounded-pill"><i class="bx bxs-heart"></i> Vidas: 3</span>
-                                            <span class="badge bg-warning text-dark fs-6 px-3 py-2 rounded-pill"><i class="bx bxs-star"></i> Puntos: 0</span>
-                                        </div>
+                                        <!-- Vidas -->
+                                            <span class="badge bg-danger fs-6 px-3 py-2 rounded-pill">
+                                                <i class="bx bxs-heart"></i> Vidas: <span id="contador-vidas">3</span>
+                                            </span>
 
-                                        <!-- Diálogo arriba de la imagen (Estilo Burbuja) -->
+                                            <!-- Puntos -->
+                                            <span class="badge bg-warning text-dark fs-6 px-3 py-2 rounded-pill">
+                                                <i class="bx bxs-star"></i> Puntos: <span id="contador-puntos">0</span>
+                                            </span>
+
+                                        <!-- Diálogo arriba de la imagen  -->
                                         <div class="alert alert-info shadow-sm" style="font-size: 1.2rem; border-radius: 15px;">
                                             "Hola, tonotos. ¿Listos para empezar?"
+                                            <span id="frase">   </span>
                                         </div>
                                         
                                         <!-- Imagen de Ayame -->
@@ -135,14 +141,7 @@
                                             <img src="{{ url_for('static', filename='images/characters/ayame.png') }}" alt="Ayame" class="img-fluid" style="max-height: 350px;">
                                         </div>
 
-                                        <!-- Área visual de la palabra a adivinar (Letras/Huecos) -->
-                                        <div class="d-flex justify-content-center gap-2 mb-4">
-                                            <div class="border border-2 border-primary rounded text-center fw-bold fs-3 bg-white" style="width: 50px; height: 50px; line-height: 45px;">_</div>
-                                            <div class="border border-2 border-primary rounded text-center fw-bold fs-3 bg-white" style="width: 50px; height: 50px; line-height: 45px;">_</div>
-                                            <div class="border border-2 border-primary rounded text-center fw-bold fs-3 bg-white" style="width: 50px; height: 50px; line-height: 45px;">_</div>
-                                            <div class="border border-2 border-primary rounded text-center fw-bold fs-3 bg-white" style="width: 50px; height: 50px; line-height: 45px;">_</div>
-                                            <div class="border border-2 border-primary rounded text-center fw-bold fs-3 bg-white" style="width: 50px; height: 50px; line-height: 45px;">_</div>
-                                        </div>
+                                      
 
                                         <!-- Espacio para escribir y botones de acción -->
                                         <div class="input-group mb-3 px-md-5">
@@ -194,5 +193,8 @@
         <script src="{{ url_for('static', filename='libs/node-waves/waves.min.js') }} "></script>
 
         <script src="{{ url_for('static', filename='js/app.js') }} "></script>
+
+        <script src="{{ url_for('static', filename='js/game/game.js') }}"></script>
+    </body>
     </body>
 </html>
