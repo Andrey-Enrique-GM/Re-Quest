@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="es">
+    <head> 
+        <meta charset="utf-8" />
+        <title>Re: Quest</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Juego de adivinar las palabras" name="description" />
+        <meta content="Andrey" name="author" />
+ 
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/site/re_quest_favicon.png') }}">
+        <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <link href="{{ url_for('static', filename='css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ url_for('static', filename='css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+        <script src="{{ url_for('static', filename='js/plugin.js') }}"></script>
+    </head>
+
+    <body data-sidebar="dark" data-sidebar-size="small">
+
+        <div id="layout-wrapper">
+
+            <header id="page-topbar">
+                <div class="navbar-header">
+                    <div class="d-flex">
+                        <div class="navbar-brand-box">
+                    
+                            <a href="{{ url_for('welcome')}}" class="logo logo-light">
+                                <span class="logo-sm">
+                                    <img src="{{ url_for('static', filename='images/site/re_quest_logo.png') }}" alt="" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="{{ url_for('static', filename='images/site/re_quest_logo.png') }}" alt="" height="70" style="margin-top:10px">
+                                </span>
+                            </a>
+                        </div>
+
+                        <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
+                            <i class="fa fa-fw fa-bars"></i>
+                        </button>
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="dropdown d-inline-block">
+                            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="rounded-circle header-profile-user" src="{{ url_for('static', filename='images/users/default.png') }}" alt="Header Avatar">
+                                <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ current_user.name }}</span>
+                                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">Mi perfil</span></a> 
+                                <a class="dropdown-item" href="#"><i class="bx bx-key font-size-16 align-middle me-1"></i> <span key="t-lock-screen">Cambiar mi contraseña</span></a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="{{ url_for('logout') }}"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">Cerrar sesión</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="vertical-menu">
+                <div data-simplebar class="h-100">
+                    <div id="sidebar-menu">
+                        <ul class="metismenu list-unstyled" id="side-menu">
+                            <li class="menu-title" key="t-menu">Categoría 1</li>
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-home-circle"></i>
+                                    <span key="t-dashboards">Inicio</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="{{ url_for('game') }}" key="t-default">JUGAR</a></li>
+                                    <li><a href="#" key="t-saas">Opción 2</a></li>
+                                    <li><a href="#" key="t-crypto">Opción 3</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="menu-title" key="t-apps">Categoría 2</li>
+
+                            <li>
+                                <a href="javascript: void(0);" class="has-arrow waves-effect">
+                                    <i class="bx bx-calendar"></i>
+                                    <span key="t-dashboards">Menú 1</span>
+                                </a>
+                                <ul class="sub-menu" aria-expanded="false">
+                                    <li><a href="#" key="t-tui-calendar">Opción 1</a></li>
+                                    <li><a href="#" key="t-full-calendar">Opción 2</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="waves-effect">
+                                    <i class="bx bx-chat"></i>
+                                    <span key="t-chat">Menú 2</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <!-- Título del nivel -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between" style="position: relative;">
+                                    <h4 class="mb-sm-0 font-size-18" style="position: absolute; top: 0; left: 0; margin: 0; padding: 10px; background: rgba(255,255,255,0.7); border-radius: 0 0 10px 0; z-index: 2;">Nivel 1</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CONTENIDO-->
+                        <div class="row justify-content-center mt-5">
+                            <div class="col-lg-8 col-md-10 text-center">
+                                
+                                <!-- Tarjeta principal del juego -->
+                                <div class="card shadow-lg" style="border-radius: 15px; background-color: #f8f9fa;">
+                                    <div class="card-body p-4">
+                                        
+                                        <!-- HUD (Vidas, Puntos, Controles extra) -->
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <span class="badge bg-danger fs-6 px-3 py-2 rounded-pill"><i class="bx bxs-heart"></i> Vidas: 3</span>
+                                            <span class="badge bg-warning text-dark fs-6 px-3 py-2 rounded-pill"><i class="bx bxs-star"></i> Puntos: 0</span>
+                                        </div>
+
+                                        <!-- Diálogo arriba de la imagen (Estilo Burbuja) -->
+                                        <div class="alert alert-info shadow-sm" style="font-size: 1.2rem; border-radius: 15px;">
+                                            "Hola, tonotos. ¿Listos para empezar?"
+                                        </div>
+                                        
+                                        <!-- Imagen de Ayame -->
+                                        <div class="mb-4">
+                                            <img src="{{ url_for('static', filename='images/characters/ayame.png') }}" alt="Ayame" class="img-fluid" style="max-height: 350px;">
+                                        </div>
+
+                                        <!-- Área visual de la palabra a adivinar (Letras/Huecos) -->
+                                        <div class="d-flex justify-content-center gap-2 mb-4">
+                                            <div class="border border-2 border-primary rounded text-center fw-bold fs-3 bg-white" style="width: 50px; height: 50px; line-height: 45px;">_</div>
+                                            <div class="border border-2 border-primary rounded text-center fw-bold fs-3 bg-white" style="width: 50px; height: 50px; line-height: 45px;">_</div>
+                                            <div class="border border-2 border-primary rounded text-center fw-bold fs-3 bg-white" style="width: 50px; height: 50px; line-height: 45px;">_</div>
+                                            <div class="border border-2 border-primary rounded text-center fw-bold fs-3 bg-white" style="width: 50px; height: 50px; line-height: 45px;">_</div>
+                                            <div class="border border-2 border-primary rounded text-center fw-bold fs-3 bg-white" style="width: 50px; height: 50px; line-height: 45px;">_</div>
+                                        </div>
+
+                                        <!-- Espacio para escribir y botones de acción -->
+                                        <div class="input-group mb-3 px-md-5">
+                                            <input type="text" class="form-control form-control-lg text-center" placeholder="Escribe tu respuesta aquí...">
+                                            <button class="btn btn-primary btn-lg" type="button">Adivinar</button>
+                                        </div>
+
+                                        <!-- Botones de ayuda secundaria -->
+                                        <div class="mt-3">
+                                            <button class="btn btn-outline-info me-2"><i class="bx bx-bulb"></i> Pedir Pista</button>
+                                            <button class="btn btn-outline-secondary"><i class="bx bx-skip-next"></i> Saltar</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!-- Fin de la Tarjeta del juego -->
+
+                            </div>
+                        </div>
+                        
+
+                    </div>  
+                </div>
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <script>document.write(new Date().getFullYear())</script> Re: Quest - Juego de adivinar
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-end d-none d-sm-block">
+                                    Desarrollado por Andrey & Migna
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+
+        </div>
+
+        <div class="rightbar-overlay"></div>
+
+        <script src="{{ url_for('static', filename='libs/jquery/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='libs/metismenu/metisMenu.min.js') }} "></script>
+        <script src="{{ url_for('static', filename='libs/simplebar/simplebar.min.js') }} "></script>
+        <script src="{{ url_for('static', filename='libs/node-waves/waves.min.js') }} "></script>
+
+        <script src="{{ url_for('static', filename='js/app.js') }} "></script>
+    </body>
+</html>

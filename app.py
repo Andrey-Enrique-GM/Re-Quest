@@ -106,6 +106,13 @@ def logout():
 def game():
     return render_template("game.html")
 
+#ruta del nivel 1
+@login_required
+@app.route('/nivel1')
+def nivel1():
+    return render_template("nivel1.html")
+
+
 
 # Ejecutar la aplicación Flask
 if __name__ == '__main__':
