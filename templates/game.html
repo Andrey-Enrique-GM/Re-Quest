@@ -72,6 +72,9 @@
                                     </a>
                                     <ul class="sub-menu" aria-expanded="false">
                                         <li><a href="{{ url_for('game') }}" key="t-default">JUGAR</a></li>
+                                        {% if current_user.profile.value == 1 %}
+                                        <li><a href="{{ url_for('edit_level') }}" key="t-default">Editar Nivel</a></li>
+                                        {% endif %}
                                         <li>
                                         <a href="{{ url_for('records') }}" class="waves-effect">
                                             <i class="bx bx-trophy"></i>
