@@ -53,26 +53,26 @@
                 <div data-simplebar class="h-100">
                     <div id="sidebar-menu">
                         <ul class="metismenu list-unstyled" id="side-menu">
-                            <li class="menu-title" key="t-menu">Categoría 1</li>
+                            <li class="menu-title">Inicio</li>
                             <li>
-                                <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                    <i class="bx bx-home-circle"></i>
-                                    <span key="t-dashboards">Inicio</span>
+                                <a href="{{ url_for('game') }}" class="waves-effect">
+                                    <i class="bx bx-play-circle"></i>
+                                    <span>JUGAR</span>
                                 </a>
-                                <ul class="sub-menu" aria-expanded="false">
-                                    <li><a href="{{ url_for('game') }}" key="t-default">JUGAR</a></li>
-                                    {% if current_user.profile.value == 1 %}
-                                    <li><a href="{{ url_for('add') }}" key="t-default">Agregar</a></li>
-                                    <li><a href="{{ url_for('edit_level') }}" key="t-default">Editar Nivel</a></li>
-                                    {% endif %}
-                                    <li>
-                                        <a href="{{ url_for('records') }}" class="waves-effect">
-                                            <i class="bx bx-trophy"></i>
-                                            <span>Récords</span>
-                                        </a>
-                                    </li>
-                                    <li><a href="#" key="t-crypto">Opción 3</a></li>
-                                </ul>
+                            </li>
+                            {% if current_user.profile.value == 1 %}
+                            <li>
+                                <a href="{{ url_for('edit_level') }}" class="waves-effect">
+                                    <i class="bx bx-edit"></i>
+                                    <span>Editar Nivel</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                            <li>
+                                <a href="{{ url_for('records') }}" class="waves-effect">
+                                    <i class="bx bx-trophy"></i>
+                                    <span>Récords</span>
+                                </a>
                             </li>
                         </ul>
                     </div>
