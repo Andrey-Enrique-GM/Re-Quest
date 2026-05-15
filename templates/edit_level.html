@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="utf-8" />
+        <title>Re: Quest</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/site/re_quest_favicon.png') }}">
+        <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" />
+        <link href="{{ url_for('static', filename='css/icons.min.css') }}" rel="stylesheet" />
+        <link href="{{ url_for('static', filename='css/app.min.css') }}" rel="stylesheet" />
+    </head>
+    <body data-sidebar="dark" data-sidebar-size="small">
+        <div id="layout-wrapper">
+            <header id="page-topbar">
+                <div class="navbar-header">
+                    <div class="d-flex">
+                        <div class="navbar-brand-box">
+                            <a href="{{ url_for('welcome')}}" class="logo logo-light">
+                                <span class="logo-sm">
+                                    <img src="{{ url_for('static', filename='images/site/re_quest_logo.png') }}" alt="" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="{{ url_for('static', filename='images/site/re_quest_logo.png') }}" alt="" height="70" style="margin-top:10px">
+                                </span>
+                            </a>
+                        </div>
+
+                        <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
+                            <i class="fa fa-fw fa-bars"></i>
+                        </button>
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="dropdown d-inline-block">
+                            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="rounded-circle header-profile-user" src="{{ url_for('static', filename='images/users/default.png') }}" alt="Header Avatar">
+                                <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ current_user.name }}</span>
+                                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">Mi perfil</span></a>
+                                <a class="dropdown-item" href="#"><i class="bx bx-key font-size-16 align-middle me-1"></i> <span key="t-lock-screen">Cambiar mi contraseña</span></a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="{{ url_for('logout') }}"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">Cerrar sesión</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="vertical-menu">
+                <div data-simplebar class="h-100">
+                    <div id="sidebar-menu">
+                        <ul class="metismenu list-unstyled" id="side-menu">
+                            <li class="menu-title">Inicio</li>
+                            <li>
+                                <a href="{{ url_for('game') }}" class="waves-effect">
+                                    <i class="bx bx-play-circle"></i>
+                                    <span>JUGAR</span>
+                                </a>
+                            </li>
+                            {% if current_user.profile.value == 1 %}
+                            <li>
+                                <a href="{{ url_for('edit_level') }}" class="waves-effect">
+                                    <i class="bx bx-edit"></i>
+                                    <span>Editar Nivel</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                            <li>
+                                <a href="{{ url_for('records') }}" class="waves-effect">
+                                    <i class="bx bx-trophy"></i>
+                                    <span>Récords</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <div class="page-content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Editar Nivel</h4>
+                                        <p class="card-title-desc">Selecciona un nivel para editar su palabra y frase.</p>
+
+                                        <div class="mb-3">
+                                            <label for="select-level" class="form-label">Nivel</label>
+                                            <select id="select-level" class="form-select"></select>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="input-word" class="form-label">Palabra</label>
+                                            <input id="input-word" class="form-control" />
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="input-phrase" class="form-label">Frase</label>
+                                            <textarea id="input-phrase" class="form-control" rows="3"></textarea>
+                                        </div>
+
+                                        <button id="btn-save" class="btn btn-primary">Guardar</button>
+
+                                        <div id="save-msg" class="mt-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <script>document.write(new Date().getFullYear())</script> Re: Quest
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+
+        <script src="{{ url_for('static', filename='libs/jquery/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='libs/sweetalert2/sweetalert2.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/edit_level.js') }}"></script>
+    </body>
+</html>

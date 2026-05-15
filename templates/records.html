@@ -58,6 +58,14 @@
                                     <span>JUGAR</span>
                                 </a>
                             </li>
+                            {% if current_user.profile.value == 1 %}
+                            <li>
+                                <a href="{{ url_for('edit_level') }}" class="waves-effect">
+                                    <i class="bx bx-edit"></i>
+                                    <span>Editar Nivel</span>
+                                </a>
+                            </li>
+                            {% endif %}
                             <li>
                                 <a href="{{ url_for('records') }}" class="waves-effect">
                                     <i class="bx bx-trophy"></i>

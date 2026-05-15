@@ -64,40 +64,25 @@
                     <div data-simplebar class="h-100">
                         <div id="sidebar-menu">
                             <ul class="metismenu list-unstyled" id="side-menu">
-                                <li class="menu-title" key="t-menu">Categoría 1</li>
+                                <li class="menu-title">Inicio</li>
                                 <li>
-                                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                        <i class="bx bx-home-circle"></i>
-                                        <span key="t-dashboards">Inicio</span>
+                                    <a href="{{ url_for('game') }}" class="waves-effect">
+                                        <i class="bx bx-play-circle"></i>
+                                        <span>JUGAR</span>
                                     </a>
-                                    <ul class="sub-menu" aria-expanded="false">
-                                        <li><a href="{{ url_for('game') }}" key="t-default">JUGAR</a></li>
-                                        <li>
-                                        <a href="{{ url_for('records') }}" class="waves-effect">
-                                            <i class="bx bx-trophy"></i>
-                                            <span>Récords</span>
-                                        </a>
-                                    </li>
-                                        <li><a href="#" key="t-crypto">Opción 3</a></li>
-                                    </ul>
                                 </li>
-
-                                <li class="menu-title" key="t-apps">Categoría 2</li>
-
+                                {% if current_user.profile.value == 1 %}
                                 <li>
-                                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                                        <i class="bx bx-calendar"></i>
-                                        <span key="t-dashboards">Menú 1</span>
+                                    <a href="{{ url_for('edit_level') }}" class="waves-effect">
+                                        <i class="bx bx-edit"></i>
+                                        <span>Editar Nivel</span>
                                     </a>
-                                    <ul class="sub-menu" aria-expanded="false">
-                                        <li><a href="#" key="t-tui-calendar">Opción 1</a></li>
-                                        <li><a href="#" key="t-full-calendar">Opción 2</a></li>
-                                    </ul>
                                 </li>
+                                {% endif %}
                                 <li>
-                                    <a href="#" class="waves-effect">
-                                        <i class="bx bx-chat"></i>
-                                        <span key="t-chat">Menú 2</span>
+                                    <a href="{{ url_for('records') }}" class="waves-effect">
+                                        <i class="bx bx-trophy"></i>
+                                        <span>Récords</span>
                                     </a>
                                 </li>
                             </ul>

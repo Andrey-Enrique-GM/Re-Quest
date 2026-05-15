@@ -2,9 +2,17 @@ from flask import Flask, render_template, request, jsonify, redirect, url_for
 from entities.user import User
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 from dotenv import load_dotenv
-import os
-
 from entities.word import Word
+import os
+import base64
+import hashlib
+
+
+try:
+    from cryptography.fernet import Fernet
+    CRYPTO_AVAILABLE = True
+except Exception:
+    CRYPTO_AVAILABLE = False
 
 # Cargar las variables de entorno desde el archivo .env
 load_dotenv()
@@ -108,11 +116,96 @@ def logout():
 def game():
     return render_template("game.html")
 
+
+# Ruta para editar niveles (solo administrador)
+@app.route('/edit_level', methods=["GET"])
+@login_required
+def edit_level():
+    if current_user.profile.value != 1:
+        return redirect(url_for('welcome'))
+    return render_template('edit_level.html')
+
+
+# API: lista de IDs disponibles en la tabla words
+@app.route('/api/words', methods=['GET'])
+@login_required
+def api_list_words():
+    ids = Word.list_ids()
+    return jsonify({ 'ids': ids })
+
+
+# API: obtener palabra por id
+@app.route('/api/words/<int:word_id>', methods=['GET'])
+@login_required
+def api_get_word(word_id):
+    w = Word.wordbyId(word_id)
+    if not w:
+        return jsonify({'error': 'not found'}), 404
+    word_value = w.word
+    if CRYPTO_AVAILABLE and word_value:
+        try:
+            secret = app.secret_key or os.getenv('SECRET_KEY') or 'default_secret'
+            key_bytes = hashlib.sha256(secret.encode()).digest()
+            fernet_key = base64.urlsafe_b64encode(key_bytes)
+            f = Fernet(fernet_key)
+            try:
+                word_value = f.decrypt(word_value.encode()).decode()
+            except Exception:
+                # No se pudo descifrar, devolvemos el valor original para no perder datos
+                pass
+        except Exception as ex:
+            print(f"Decryption setup error: {ex}")
+
+    return jsonify({ 'id': w.id, 'word': word_value, 'phrase': w.phrase })
+
+
+# API: actualizar palabra por id
+@app.route('/api/words/<int:word_id>', methods=['POST'])
+@login_required
+def api_update_word(word_id):
+    if current_user.profile.value != 1:
+        return jsonify({'success': False, 'message': 'forbidden'}), 403
+    data = request.get_json() or {}
+    word = data.get('word')
+    phrase = data.get('phrase')
+    if word is None or phrase is None:
+        return jsonify({'success': False, 'message': 'missing data'}), 400
+
+    if not CRYPTO_AVAILABLE:
+        return jsonify({'success': False, 'message': 'cryptography library not installed'}), 500
+
+    try:
+        secret = app.secret_key or os.getenv('SECRET_KEY') or 'default_secret'
+        key_bytes = hashlib.sha256(secret.encode()).digest()
+        fernet_key = base64.urlsafe_b64encode(key_bytes)
+        f = Fernet(fernet_key)
+        encrypted = f.encrypt(word.encode()).decode()
+    except Exception as ex:
+        print(f"Encryption error: {ex}")
+        return jsonify({'success': False, 'message': 'encryption error'}), 500
+
+    ok = Word.update_word(word_id, encrypted, phrase)
+    if ok:
+        return jsonify({'success': True})
+    else:
+        return jsonify({'success': False, 'message': 'db error'}), 500
+
+
+# Ruta para la página de agregar elementos (solo visible para perfil 1 = administrador)
+@app.route('/add', methods=["GET"])
+@login_required
+def add():
+    if current_user.profile.value != 1:
+        return redirect(url_for('welcome'))
+    return render_template("add.html")
+
+
 #ruta del nivel 1
 @login_required
 @app.route('/nivel1')
 def nivel1():
     return render_template("nivel1.html")
+
 
 @app.route('/records')
 @login_required
@@ -145,6 +238,7 @@ def obtener_pista(word_id):
     else:
         return jsonify({'status': 'fin'}), 404
 
+
 @app.route('/api/juego/validar', methods=['POST'])
 def validar_intento():
     data = request.json
@@ -156,7 +250,21 @@ def validar_intento():
     if not palabra:
         return jsonify({'error': 'Palabra no encontrada'}), 404
 
-    palabra_real = palabra.word.lower()
+    palabra_real = palabra.word
+    if CRYPTO_AVAILABLE and palabra_real:
+        try:
+            secret = app.secret_key or os.getenv('SECRET_KEY') or 'default_secret'
+            key_bytes = hashlib.sha256(secret.encode()).digest()
+            fernet_key = base64.urlsafe_b64encode(key_bytes)
+            f = Fernet(fernet_key)
+            try:
+                palabra_real = f.decrypt(palabra_real.encode()).decode()
+            except Exception:
+                pass
+        except Exception as ex:
+            print(f"Decryption setup error: {ex}")
+
+    palabra_real = palabra_real.lower()
 
     if intento_usuario == palabra_real:
         return jsonify({'correcto': True})
