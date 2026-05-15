@@ -1,0 +1,44 @@
+    .vn-title-screen {
+        position: relative;
+        width: 100%;
+        height: 75vh; 
+        background-color: #2a2a2a; 
+        
+        background-size: cover;
+        background-position: center;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        overflow: hidden;
+    }
+
+    .vn-buttons-container {
+        position: absolute;
+        top: 50%;
+        right: 8%; 
+        transform: translateY(-50%); 
+        display: flex;
+        flex-direction: column;
+        gap: 20px; 
+        width: 220px;
+    }
+
+    .vn-btn {
+        background-color: rgba(255, 255, 255, 0.85); 
+        color: #333;
+        border: 2px solid #fff;
+        padding: 15px 20px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        border-radius: 8px;
+        text-align: center;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .vn-btn:hover {
+        background-color: #fff;
+        color: #000;
+        transform: scale(1.05); 
+    }

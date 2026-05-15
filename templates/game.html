@@ -125,11 +125,16 @@
                         <div class="col-md-6 text-center">
                             <!-- Diálogo arriba de la imagen -->
                             <div class="alert alert-info" style="font-size: 1.2rem;">Hola, tonotos listo para empezar?</div>
+                            <li>
                            <a href="{{ url_for('nivel1') }}" class="btn btn-primary mb-3">Empezar</a>
+                                </li>
+                                <li>
+                           <a href="{{ url_for('records') }}" class="btn btn-primary mb-3">Records</a>
+                                </li>
                             <!-- Imagen de Ayame -->
                             <img src="{{ url_for('static', filename='images/characters/ayame.png') }}" alt="Ayame" class="img-fluid mb-3" style="max-height: 350px;">
-                            <!-- Espacio para escribir debajo de la imagen -->
-                            <input type="text" class="form-control" placeholder="Escribe aquí...">
+                            
+                            
                         </div>
                     </div>
                     
