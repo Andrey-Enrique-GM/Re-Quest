@@ -1,0 +1,67 @@
+/* Estilo  basdo en : https://codepen.io/TidyCoder/pen/GRaampx
+
+atentamente migna GG
+*/
+.title-wrapper {
+  min-height: calc(100vh - 150px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background: url("https://cdn.pixabay.com/photo/2016/01/02/16/54/wood-1118468_960_720.jpg") center/cover fixed;
+  border-radius: 15px;
+}
+
+.title-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  background: rgba(20, 20, 20, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.title-header {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.title-btn {
+  padding: 15px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 18px;
+  font-weight: 600;
+  background: rgba(5, 5, 5, 0.8);
+  border-radius: 8px;
+  color: #eee;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+}
+
+.title-btn:hover {
+  background: #007bff;
+  color: #ffffff;
+  border-color: #007bff;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+}
+
+.title-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 5px rgba(0, 123, 255, 0.4);
+}

@@ -2,6 +2,7 @@
 let vidas = 3;
 let puntos = 0;
 let idActual = 1;
+const TYPING_SPEED = 50;
 
 document.addEventListener("DOMContentLoaded", function() {
     
@@ -19,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {
             
             if (respuesta.status === 404) {
                 // Si Flask devuelve 404, ya no hay más IDs = Ganó el juego
-                uiFrase.innerText = "¡Misterio resuelto!";
+                escribirTextoRPG("¡Misterio resuelto!");
                 inputRespuesta.disabled = true;
                 btnAdivinar.disabled = true;
                 
@@ -35,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const datos = await respuesta.json();
             if (datos.status === 'ok') {
                 // Colocamos la frase en el HTML
-                uiFrase.innerText = datos.phrase; 
+                escribirTextoRPG(datos.phrase); 
             }
 
         } catch (error) {
@@ -99,10 +100,41 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 }
 
-    // Permitir enviar con la tecla "Enter"
     inputRespuesta.addEventListener('keypress', function (e) {
         if (e.key === 'Enter') btnAdivinar.click();
     });
 
     cargarPalabra(idActual);
 });
+
+function escribirTextoRPG(texto) {
+    const contenedor = document.getElementById('frase-typing');
+    
+   
+    contenedor.innerHTML = ''; 
+
+    
+    const textList = texto.split('');
+    let html = '';
+    for (const char of textList) {
+        html += `<span>${char}</span>`;
+    }
+    contenedor.innerHTML = html;
+
+    const spans = contenedor.querySelectorAll('span');
+    let delay = 0;
+
+    for (let i = 0; i < spans.length; i++) {
+        const span = spans[i];
+        const charText = span.textContent;
+
+        delay += TYPING_SPEED;
+        
+        if (charText === ' ') delay += TYPING_SPEED * 2; 
+
+       
+        setTimeout(() => {
+            span.style.display = 'inline-block';
+        }, delay);
+    }
+}

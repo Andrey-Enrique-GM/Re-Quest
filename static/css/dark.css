@@ -1,0 +1,28 @@
+
+.dark-game-card {
+    background-color: #1a1d21 !important;
+    background-image: url("../images/characters/ayame.png");
+    background-size: contain; 
+    background-position: center bottom; 
+    background-repeat: no-repeat; 
+
+    border: 1px solid #32383e !important;
+    min-height: calc(100vh - 220px); 
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.6) !important;
+}
+.dark-input {
+background-color: #212529 !important;
+                color: #f8f9fa !important;
+                border: 1px solid #495057 !important;
+            }
+            .dark-input:focus {
+                background-color: #2b3035 !important;
+                border-color: #86b7fe !important;
+                box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+            }
+            .dark-input::placeholder {
+                color: #6c757d !important;
+            }  
+            
