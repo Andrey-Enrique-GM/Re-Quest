@@ -9,9 +9,27 @@ document.addEventListener("DOMContentLoaded", function() {
     // Referencias al juego
     const uiVidas = document.getElementById('contador-vidas');
     const uiPuntos = document.getElementById('contador-puntos');
+    const uiNivel = document.getElementById('nivel-actual');
     const uiFrase = document.getElementById('frase'); 
     const inputRespuesta = document.querySelector('input[type="text"]'); 
     const btnAdivinar = document.querySelector('button.btn-primary'); 
+    const MAX_NIVEL = 5;
+
+    function actualizarNivel() {
+        uiNivel.innerText = `Nivel ${idActual}`;
+    }
+
+    function mostrarVictoria() {
+        escribirTextoRPG("¡Misterio resuelto!");
+        inputRespuesta.disabled = true;
+        btnAdivinar.disabled = true;
+
+        if (typeof Swal !== 'undefined') {
+            Swal.fire('¡Felicidades!', `Completaste el juego con ${puntos} puntos.`, 'success');
+        } else {
+            alert(`¡Felicidades! Completaste el juego con ${puntos} puntos.`);
+        }
+    }
 
     // 1. Cargar la pista desde Flask
     async function cargarPalabra(id) {
@@ -63,11 +81,15 @@ document.addEventListener("DOMContentLoaded", function() {
                 puntos += 100;
                 uiPuntos.innerText = puntos;
                 inputRespuesta.value = ""; 
-                
-                // Cargar el siguiente nivel
-                idActual++;
-                cargarPalabra(idActual);
-                
+
+                // Avanzar al siguiente nivel o mostrar victoria
+                if (idActual < MAX_NIVEL) {
+                    idActual++;
+                    actualizarNivel();
+                    cargarPalabra(idActual);
+                } else {
+                    mostrarVictoria();
+                }
             } else {
                 // Se equivocó
                 inputRespuesta.value = ""; 
@@ -104,6 +126,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (e.key === 'Enter') btnAdivinar.click();
     });
 
+    actualizarNivel();
     cargarPalabra(idActual);
 });
 

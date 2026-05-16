@@ -4,6 +4,7 @@ from flask_login import UserMixin
 from enums.profile import Profile
 import pymysql
 
+
 class User(UserMixin):
     def __init__(self, id: int, name: str, email: str, password_hash: str,
                  profile: Profile, is_active: bool):

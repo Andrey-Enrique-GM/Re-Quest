@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function(){
     const btnSave = document.getElementById('btn-save');
     const saveMsg = document.getElementById('save-msg');
 
+
+
+    // Mostrar mensaje con SweetAlert2 o fallback a console
     function showSwalMessage(msg, success){
         if (typeof Swal !== 'undefined'){
             if(success){
@@ -44,6 +47,10 @@ document.addEventListener('DOMContentLoaded', function(){
         }
     }).catch(e=>console.error(e));
 
+
+
+    // Cargar por id
+    // Metodo para cargar palabra y frase por id
     function loadById(id){
         fetch(`/api/words/${id}`).then(r=>r.json()).then(data=>{
             if(data && !data.error){
