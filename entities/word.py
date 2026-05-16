@@ -1,16 +1,16 @@
 import pymysql
 from persistence.db import get_connection
 
-
+# Clase para representar una palabra y su frase asociada
 class Word:
     def __init__(self, id: int, word: str, phrase: str):
         self.id = id
         self.word = word
         self.phrase = phrase
 
-
+# Método para obtener una palabra por su ID
     @classmethod
-    def wordbyId(cls,id):
+    def wordbyId(cls, id: int):
         connection = get_connection()
         cursor = connection.cursor(pymysql.cursors.DictCursor)
         sql = "SELECT id, word, phrase FROM words WHERE id = %s"
@@ -28,7 +28,7 @@ class Word:
         else:
             return None
 
-
+# Método para listar todos los IDs de palabras disponibles
     @classmethod
     def list_ids(cls):
         connection = get_connection()
@@ -40,9 +40,9 @@ class Word:
         connection.close()
         return [r['id'] for r in rows]
 
-
+# Método para actualizar una palabra y su frase por ID
     @classmethod
-    def update_word(cls, id, word, phrase):
+    def update_word(cls, id: int, word: str, phrase: str):
         try:
             connection = get_connection()
             cursor = connection.cursor()

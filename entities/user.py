@@ -6,7 +6,7 @@ import pymysql
 
 class User(UserMixin):
     def __init__(self, id: int, name: str, email: str, password_hash: str,
-                 profile, is_active: bool):
+                 profile: Profile, is_active: bool):
         self.id = id
         self.name = name
         self.email = email
