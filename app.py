@@ -185,16 +185,12 @@ def api_update_word(word_id):
 @login_required
 def records():
     # Datos de prueba simples
-    top_10 = [
-        {"nombre": "Andrey", "puntos": 2500, "nivel": 10},
-        {"nombre": "Migna", "puntos": 2100, "nivel": 8},
-        {"nombre": "Miguel", "puntos": 1850, "nivel": 7},
-        {"nombre": "Valeria", "puntos": 1200, "nivel": 5},
-        {"nombre": "Efraín", "puntos": 950, "nivel": 4}
-    ]
+    top_10 = Winner.get_winners()
     
     # Récord personal del usuario
-    user_best = {"nombre": current_user.name, "puntos": 450, "nivel": 2}
+    user_best = Winner.get_user_best_score(current_user.id)
+    
+
 
     return render_template("records.html", top_10=top_10, user_best=user_best)
 

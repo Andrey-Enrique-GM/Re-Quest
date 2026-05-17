@@ -116,6 +116,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 // Se equivocó
                 inputRespuesta.value = ""; 
                 perderVida();
+                puntos -= 50;
+                uiPuntos.innerText = puntos;
             }
 
         } catch (error) {

@@ -102,9 +102,9 @@
                                             <img src="{{ url_for('static', filename='images/site/bronce.webp') }}" alt="Bronce" class="img-fluid" style="max-height: 120px; width: auto;"> 
                                         {% endif %}
                                     </div>
-                                    <h5 class="mt-2 fw-bold text-truncate">{{ top_10[i].nombre }}</h5>
-                                    <h4 class="text-primary fw-bold">{{ top_10[i].puntos }} pts</h4>
-                                    <p class="text-muted mb-0">Nivel {{ top_10[i].nivel }}</p>
+                                    <h5 class="mt-2 fw-bold text-truncate">{{ top_10[i].name }}</h5>
+                                    <h4 class="text-primary fw-bold">{{ top_10[i].score }} pts</h4>
+                                    <p class="text-muted mb-0">Nivel {{ top_10[i].level }}</p>
                                 </div>
                             </div>
                         </div>
@@ -130,8 +130,8 @@
                                                         {% if loop.index > 3 %}
                                                         <tr>
                                                             <td class="fw-bold">#{{ loop.index }}</td>
-                                                            <td>{{ record.nombre }}</td>
-                                                            <td class="text-end fw-bold text-primary">{{ record.puntos }}</td>
+                                                            <td>{{ record.name }}</td>
+                                                            <td class="text-end fw-bold text-primary">{{ record.score }}</td>
                                                         </tr>
                                                         {% endif %}
                                                     {% endfor %}
@@ -141,8 +141,8 @@
                                                     </tr>
                                                     <tr class="table-warning">
                                                         <td class="fw-bold">-</td>
-                                                        <td class="fw-bold">{{ user_best.nombre }}</td>
-                                                        <td class="text-end fw-bold text-dark">{{ user_best.puntos }}</td>
+                                                        <td class="fw-bold">{{ current_user.name }}</td>
+                                                        <td class="text-end fw-bold text-dark">{{ user_best }}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>

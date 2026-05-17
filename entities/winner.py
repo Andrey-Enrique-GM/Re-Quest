@@ -44,3 +44,55 @@ class Winner:
         finally:
             cursor.close()
             connection.close()
+
+    @classmethod
+    def get_winners(cls) -> list:
+        """
+            Obtiene una lista de los ganadores ordenados por puntaje de mayor a menor.
+        """
+        try:
+            connection = get_connection()
+            cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+            sql = """
+                SELECT w.id, w.score, w.id_user, u.name 
+                FROM winners w 
+                JOIN user u ON w.id_user = u.id 
+                ORDER BY w.score DESC
+            """
+            cursor.execute(sql)
+            winners = cursor.fetchall()
+            return winners
+        except Exception as e:
+            print(f"Error al obtener los ganadores: {e}")
+            return []
+        finally:
+            cursor.close()
+            connection.close()
+
+    @classmethod
+    def get_user_best_score(cls, id_user: int) -> Optional[int]:
+        """
+            Obtiene el mejor puntaje registrado para un usuario específico.
+
+            Parameters:
+                id_user (int): El ID del usuario.
+
+            Returns:
+                Optional[int]: El mejor puntaje del usuario o None si no tiene registros.
+        """
+        try:
+            connection = get_connection()
+            cursor = connection.cursor(pymysql.cursors.DictCursor)
+
+            sql = "SELECT score FROM winners WHERE id_user = %s"
+            cursor.execute(sql, (id_user,))
+            row = cursor.fetchone()
+
+            return row['score'] if row else None
+        except Exception as e:
+            print(f"Error al obtener el mejor puntaje del usuario: {e}")
+            return None
+        finally:
+            cursor.close()
+            connection.close()
