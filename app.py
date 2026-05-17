@@ -4,6 +4,7 @@ from cryptography.fernet import Fernet
 from dotenv import load_dotenv
 from entities.user import User
 from entities.word import Word
+from entities.winner import Winner
 import hashlib
 import base64
 import os
@@ -220,6 +221,19 @@ def obtener_pista(word_id):
         })
     else:
         return jsonify({'status': 'fin'}), 404
+
+
+# API para guardar el registro de ganador cuando el juego termina
+@app.route('/api/juego/guardar_ganador', methods=['POST'])
+@login_required
+def guardar_ganador():
+    data = request.get_json() or {}
+    score = data.get('score', 0)
+
+    winner = Winner(None, score, current_user.id)
+    if winner.save():
+        return jsonify({'success': True}), 201
+    return jsonify({'success': False, 'message': 'No se pudo guardar el registro del ganador'}), 500
 
 
 # API para validar el intento del usuario

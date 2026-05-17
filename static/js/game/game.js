@@ -19,7 +19,9 @@ document.addEventListener("DOMContentLoaded", function() {
         uiNivel.innerText = `Nivel ${idActual}`;
     }
 
-    function mostrarVictoria() {
+    async function mostrarVictoria() {
+        await guardarGanador(puntos);
+
         escribirTextoRPG("¡Misterio resuelto!");
         inputRespuesta.disabled = true;
         btnAdivinar.disabled = true;
@@ -31,6 +33,23 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    async function guardarGanador(score) {
+        try {
+            const response = await fetch('/api/juego/guardar_ganador', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ score })
+            });
+            const result = await response.json();
+
+            if (!response.ok) {
+                console.error('Error guardando ganador:', result.message || result);
+            }
+        } catch (error) {
+            console.error('Error en la petición de guardado del ganador:', error);
+        }
+    }
+
     // 1. Cargar la pista desde Flask
     async function cargarPalabra(id) {
         try {
@@ -38,16 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
             
             if (respuesta.status === 404) {
                 // Si Flask devuelve 404, ya no hay más IDs = Ganó el juego
-                escribirTextoRPG("¡Misterio resuelto!");
-                inputRespuesta.disabled = true;
-                btnAdivinar.disabled = true;
-                
-                // Usando SweetAlert2
-                if (typeof Swal !== 'undefined') {
-                    Swal.fire('¡Felicidades!', `Completaste el juego con ${puntos} puntos.`, 'success');
-                } else {
-                    alert(`¡Felicidades! Completaste el juego con ${puntos} puntos.`);
-                }
+                await mostrarVictoria();
                 return;
             }
 
