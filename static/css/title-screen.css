@@ -2,12 +2,12 @@
         position: relative;
         width: 100%;
         height: 75vh; 
-        background-color: #2a2a2a; 
+        background-color: #670101; 
         
         background-size: cover;
         background-position: center;
         border-radius: 12px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        box-shadow: 0 8px 20px rgba(255, 3, 3, 0.203);
         overflow: hidden;
     }
 
@@ -24,7 +24,7 @@
 
     .vn-btn {
         background-color: rgba(255, 255, 255, 0.85); 
-        color: #333;
+        color: #702323;
         border: 2px solid #fff;
         padding: 15px 20px;
         font-size: 1.2rem;
@@ -38,7 +38,7 @@
     }
 
     .vn-btn:hover {
-        background-color: #fff;
-        color: #000;
+        background-color: #4514148e;
+        color: #570909cd;
         transform: scale(1.05); 
     }

@@ -8,7 +8,7 @@ atentamente migna GG
   align-items: center;
   justify-content: center;
   padding: 15px;
-  background: url("https://cdn.pixabay.com/photo/2016/01/02/16/54/wood-1118468_960_720.jpg") center/cover fixed;
+  background: url("../images/characters/title.jpg") center/cover fixed;
   border-radius: 15px;
 }
 
@@ -19,12 +19,12 @@ atentamente migna GG
   padding: 40px;
   width: 100%;
   max-width: 400px;
-  background: rgba(20, 20, 20, 0.65);
+  background: rgba(247, 56, 56, 0.299);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(186, 27, 27, 0.1);
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px rgba(235, 4, 4, 0.5);
 }
 
 .title-header {
@@ -38,10 +38,10 @@ atentamente migna GG
 
 .title-btn {
   padding: 15px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 0, 0, 0.719);
   font-size: 18px;
   font-weight: 600;
-  background: rgba(5, 5, 5, 0.8);
+  background: rgba(184, 16, 16, 0.564);
   border-radius: 8px;
   color: #eee;
   cursor: pointer;

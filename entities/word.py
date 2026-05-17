@@ -25,9 +25,7 @@ class Word:
             cursor.execute(sql, (id,))
 
         row = cursor.fetchone()
-        print(f"Buscando ID {id}...") # Debug
-        print(f"Resultado de la DB: {row}") # Debug
-
+       
         cursor.close()
         connection.close()
 
