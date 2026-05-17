@@ -57,11 +57,10 @@ def create_user():
 
     name = data.get("name")
     email = data.get("email")
-    password = data.get("password")
 
+    password = data.get("password")
     if User.check_email_exists(email):
         return jsonify({"success": False, "message": "El correo electrónico ingresado ya se encuentra registrado."}), 409
-
     if User.save(name, email, password):
         return jsonify({"success": True, "message": "Su cuenta fue creada correctamente."}), 201
     else:
@@ -75,9 +74,8 @@ def login():
 
     email = data.get("email")
     password = data.get("password")
-
+    
     user = User.check_login(email, password)
-
     # Validar si la cuenta del usuario esta activa
     if user:
         if user.is_active:
@@ -149,8 +147,7 @@ def api_get_word(word_id):
     except Exception:
         # No se pudo descifrar, devolvemos el valor original para no perder datos
         pass
-
-    return jsonify({ 'id': w.id, 'word': word_value, 'phrase': w.phrase })
+    return jsonify({ 'id': w.id, 'word': word_value, 'phrase': w.phrase, 'character': w.character })
 
 
 # API: actualizar palabra por id
@@ -162,6 +159,7 @@ def api_update_word(word_id):
     data = request.get_json() or {}
     word = data.get('word')
     phrase = data.get('phrase')
+    character = data.get('character')
     if word is None or phrase is None:
         return jsonify({'success': False, 'message': 'missing data'}), 400
 
@@ -175,7 +173,7 @@ def api_update_word(word_id):
         print(f"Encryption error: {ex}")
         return jsonify({'success': False, 'message': 'encryption error'}), 500
 
-    ok = Word.update_word(word_id, encrypted, phrase)
+    ok = Word.update_word(word_id, encrypted, phrase, character)
     if ok:
         return jsonify({'success': True})
     else:
@@ -215,10 +213,13 @@ def obtener_pista(word_id):
     palabra = Word.wordbyId(word_id)
     
     if palabra:
-        return jsonify({
+        response_data = {
             'status': 'ok',
-            'phrase': palabra.phrase 
-        })
+            'phrase': palabra.phrase,
+            'character': palabra.character if hasattr(palabra, 'character') else 'ayame.png'
+        }
+        print(f"[obtener_pista] word_id={word_id}, character={response_data['character']}")
+        return jsonify(response_data)
     else:
         return jsonify({'status': 'fin'}), 404
 

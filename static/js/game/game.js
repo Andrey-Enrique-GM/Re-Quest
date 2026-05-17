@@ -19,6 +19,13 @@ document.addEventListener("DOMContentLoaded", function() {
         uiNivel.innerText = `Nivel ${idActual}`;
     }
 
+    function actualizarPersonaje(character) {
+        const gameCard = document.querySelector('.dark-game-card');
+        const characterPath = `/static/images/characters/${character}`;
+        console.log(`[actualizarPersonaje] Cambiando a: ${characterPath}`);
+        gameCard.style.backgroundImage = `url("${characterPath}")`;
+    }
+
     async function mostrarVictoria() {
         await guardarGanador(puntos);
 
@@ -63,6 +70,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const datos = await respuesta.json();
             if (datos.status === 'ok') {
+                // Actualizamos el personaje según el nivel
+                console.log(`[cargarPalabra] Datos recibidos:`, datos);
+                if (datos.character) {
+                    actualizarPersonaje(datos.character);
+                }
                 // Colocamos la frase en el HTML
                 escribirTextoRPG(datos.phrase); 
             }
