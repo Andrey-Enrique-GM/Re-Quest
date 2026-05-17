@@ -1,112 +1,185 @@
 <!doctype html>
 <html lang="es">
-<head> 
-    <meta charset="utf-8" />
-    <title>Inicio | Re: Quest</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='images/site/re_quest_favicon.png') }}">
-    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url_for('static', filename='css/icons.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url_for('static', filename='css/app.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ url_for('static', filename='css/title.css') }}" rel="stylesheet" type="text/css" />
-</head>
+    <head> 
+        <meta charset="utf-8" />
+        <title>Re: Quest</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Juego de adivinar las palabras" name="description" />
+        <meta content="Andrey" name="author" />
+ 
+        <link rel="shortcut icon" href="{{ url_for('static', filename='images/site/re_quest_favicon.png') }}">
+        <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <link href="{{ url_for('static', filename='css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ url_for('static', filename='css/retro.css') }}" rel="stylesheet" type="text/css" />
+         <link href="{{ url_for('static', filename='css/dark.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ url_for('static', filename='css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+        <script src="{{ url_for('static', filename='js/plugin.js') }}"></script>
 
-<body data-sidebar="dark" data-sidebar-size="small">
-    <div id="layout-wrapper">
-        <header id="page-topbar">
-            <div class="navbar-header">
-                <div class="d-flex">
-                    <div class="navbar-brand-box">
-                        <a href="{{ url_for('welcome')}}" class="logo logo-light">
-                            <span class="logo-sm">
-                                <img src="{{ url_for('static', filename='images/site/re_quest_logo.png') }}" alt="" height="22">
-                            </span>
-                            <span class="logo-lg">
-                                <img src="{{ url_for('static', filename='images/site/re_quest_logo.png') }}" alt="" height="70" style="margin-top:10px">
-                            </span>
-                        </a>
-                    </div>
-                    <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
-                        <i class="fa fa-fw fa-bars"></i>
-                    </button>
-                </div>
+        <link href='https://fonts.googleapis.com/css?family=Black+Ops+One' rel='stylesheet' type='text/css'>
+        <link href="{{ url_for('static', filename='css/gameover.css') }}" rel="stylesheet" type="text/css" />
 
-                <div class="d-flex">
-                    <div class="dropdown d-inline-block">
-                        <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="rounded-circle header-profile-user" src="{{ url_for('static', filename='images/users/default.png') }}" alt="Header Avatar">
-                            <span class="d-none d-xl-inline-block ms-1">{{ current_user.name }}</span>
-                            <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+    </head>
+
+    <body data-sidebar="dark" data-sidebar-size="small">
+
+        <div id="layout-wrapper">
+
+            <header id="page-topbar">
+                <div class="navbar-header">
+                    <div class="d-flex">
+                        <div class="navbar-brand-box">
+                            <a href="{{ url_for('welcome')}}" class="logo logo-light">
+                                <span class="logo-sm">
+                                    <img src="{{ url_for('static', filename='images/site/re_quest_logo.png') }}" alt="" height="22">
+                                </span>
+                                <span class="logo-lg">
+                                    <img src="{{ url_for('static', filename='images/site/re_quest_logo.png') }}" alt="" height="70" style="margin-top:10px">
+                                </span>
+                            </a>
+                        </div>
+
+                        <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
+                            <i class="fa fa-fw fa-bars"></i>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span>Mi perfil</span></a> 
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-danger" href="{{ url_for('logout') }}"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span>Cerrar sesión</span></a>
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="dropdown d-inline-block">
+                            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="rounded-circle header-profile-user" src="{{ url_for('static', filename='images/users/default.png') }}" alt="Header Avatar">
+                                <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ current_user.name }}</span>
+                                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="#"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">Mi perfil</span></a> 
+                                <a class="dropdown-item" href="#"><i class="bx bx-key font-size-16 align-middle me-1"></i> <span key="t-lock-screen">Cambiar mi contraseña</span></a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" href="{{ url_for('logout') }}"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">Cerrar sesión</span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </header>
+            </header>
 
-        <div class="vertical-menu">
-            <div data-simplebar class="h-100">
-                <div id="sidebar-menu">
-                    <ul class="metismenu list-unstyled" id="side-menu">
-                        <li class="menu-title">Inicio</li>
-                        <li>
-                            <a href="{{ url_for('game') }}" class="waves-effect">
-                                <i class="bx bx-play-circle"></i>
-                                <span>JUGAR</span>
-                            </a>
-                        </li>
-                        {% if current_user.profile.value == 1 %}
+            <div class="vertical-menu">
+                <div data-simplebar class="h-100">
+                    <div id="sidebar-menu">
+                        <ul class="metismenu list-unstyled" id="side-menu">
+                            <li class="menu-title">Inicio</li>
+                            <li>
+                                <a href="{{ url_for('game') }}" class="waves-effect">
+                                    <i class="bx bx-play-circle"></i>
+                                    <span>JUGAR</span>
+                                </a>
+                            </li>
+                            {% if current_user.profile.value == 1 %}
                             <li>
                                 <a href="{{ url_for('edit_level') }}" class="waves-effect">
                                     <i class="bx bx-edit"></i>
                                     <span>Editar Nivel</span>
                                 </a>
                             </li>
-                        {% endif %}
-                        <li>
-                            <a href="{{ url_for('records') }}" class="waves-effect">
-                                <i class="bx bx-trophy"></i>
-                                <span>Récords</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="main-content">
-            <div class="page-content">
-                <div class="container-fluid">
-                    {% include 'title.html' %}
-                </div>  
-            </div>
-
-            <footer class="footer">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <script>document.write(new Date().getFullYear())</script> Re: Quest
-                        </div>
-                        <div class="col-sm-6 text-sm-end">
-                            Desarrollado por Andrey & Migna
-                        </div>
+                            {% endif %}
+                            <li>
+                                <a href="{{ url_for('records') }}" class="waves-effect">
+                                    <i class="bx bx-trophy"></i>
+                                    <span>Récords</span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </footer>
+            </div>
+
+            <div class="main-content">
+
+                <div class="page-content">
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box d-sm-flex align-items-center justify-content-between" style="position: relative;">
+                                    <!-- NIVEL # -->
+                                    <h4 id="nivel-actual" class="mb-sm-0 font-size-18 text-light" style="position: absolute; top: 0; left: 0; margin: 0; padding: 10px 20px; background: rgba(0,0,0,0.6); border-radius: 0 0 10px 0; z-index: 2; border-right: 1px solid #32383e; border-bottom: 1px solid #32383e;">Nivel 1</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center mt-4">
+                            <div class="col-xl-10 col-lg-12 text-center">
+                                
+                                <div class="card dark-game-card" style="border-radius: 15px; position: relative; overflow: hidden;">
+
+                                     {% include 'over.html' %}
+
+                                  <div class="card shadow-none mb-0 d-flex flex-column flex-grow-1" style="background-color: transparent;">
+    
+                                                        <div class="card-body p-4 d-flex flex-column flex-grow-1">
+                                                            
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <span class="badge bg-danger fs-6 px-4 py-2 rounded-pill shadow">
+                                                                    <i class="bx bxs-heart"></i> Vidas: <span id="contador-vidas">3</span>
+                                                                </span>
+                                                                <span class="badge bg-warning text-dark fs-6 px-4 py-2 rounded-pill shadow">
+                                                                    <i class="bx bxs-star"></i> Puntos: <span id="contador-puntos">0</span>
+                                                                </span>
+                                                            </div>
+                                                            
+                                                            <div class="mt-auto w-100">
+                                                                <div class="retro-box shadow-lg mb-3 mx-auto" style="max-width: 800px;">
+                                                                    <p id="frase-typing"></p>
+                                                                    <p class="retro-cursor"></p>
+                                                                </div>
+                                                            
+                                                                <div class="input-group px-md-5 mx-auto" style="max-width: 800px;">
+                                                                    <input type="text" class="form-control form-control-lg text-center dark-input" placeholder="Escribe tu respuesta aquí...">
+                                                                    <button class="btn btn-primary btn-lg px-4" type="button">Adivinar</button>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                            </div>
+                        </div>
+
+                    </div>  
+                </div>
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <script>document.write(new Date().getFullYear())</script> Re: Quest - Juego de adivinar
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="text-sm-end d-none d-sm-block">
+                                    Desarrollado por Andrey & Migna
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+
         </div>
-    </div>
 
-    <div class="rightbar-overlay"></div>
+        <div class="rightbar-overlay"></div>
 
-    <script src="{{ url_for('static', filename='libs/jquery/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='libs/metismenu/metisMenu.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='libs/simplebar/simplebar.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='libs/node-waves/waves.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-</body>
+        <script src="{{ url_for('static', filename='libs/jquery/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='libs/metismenu/metisMenu.min.js') }} "></script>
+        <script src="{{ url_for('static', filename='libs/simplebar/simplebar.min.js') }} "></script>
+        <script src="{{ url_for('static', filename='libs/node-waves/waves.min.js') }} "></script>
+
+        <script src="{{ url_for('static', filename='js/app.js') }} "></script>
+
+        <script src="{{ url_for('static', filename='js/game/game.js') }}"></script>
+    </body>
 </html>

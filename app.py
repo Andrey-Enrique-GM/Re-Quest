@@ -74,7 +74,7 @@ def login():
 
     email = data.get("email")
     password = data.get("password")
-    
+
     user = User.check_login(email, password)
     # Validar si la cuenta del usuario esta activa
     if user:
@@ -178,13 +178,6 @@ def api_update_word(word_id):
         return jsonify({'success': True})
     else:
         return jsonify({'success': False, 'message': 'db error'}), 500
-
-
-# Ruta del nivel 1
-@login_required
-@app.route('/nivel1')
-def nivel1():
-    return render_template("nivel1.html")
 
 
 # Ruta de la página de récords
