@@ -4,6 +4,7 @@ from persistence.db import get_connection
 
 
 class Winner:
+    """Representa el registro de puntaje de un usuario al completar el juego."""
     def __init__(self, id: Optional[int], score: int, id_user: int):
         self.id = id
         self.score = score

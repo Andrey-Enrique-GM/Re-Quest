@@ -2,10 +2,15 @@ from persistence.db import get_connection
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from enums.profile import Profile
+from typing import Optional
 import pymysql
 
 
 class User(UserMixin):
+    """
+    Representa un usuario del sistema.
+    Hereda de UserMixin para integrarse con Flask-Login.
+    """
     def __init__(self, id: int, name: str, email: str, password_hash: str,
                  profile: Profile, is_active: bool):
         self.id = id
@@ -22,12 +27,12 @@ class User(UserMixin):
 
     # Propiedad para obtener el estado de cuenta del usuario (Activo o Inactivo)
     @property
-    def is_active(self):
+    def is_active(self) -> bool:
         return self._is_active
 
 
     # Metodo para verificar si el correo ya se encuentra registrado en la base de datos
-    def check_email_exists(email) -> bool:
+    def check_email_exists(email: str) -> bool:
         """
             Verifica si la cuenta de correo electrónico ya se encuentra registrada.
 
@@ -50,6 +55,7 @@ class User(UserMixin):
     
         
     # Metodo para guardar un nuevo usuario en la base de datos
+    @staticmethod
     def save(name: str, email:str, password:str) -> bool:
         """
             Guarda un registro de usuario en la base de datos
@@ -80,7 +86,18 @@ class User(UserMixin):
         
 
     # Metodo para verificar las credenciales de inicio de sesión
+    @staticmethod
     def check_login(email, password):
+        """
+        Verifica las credenciales del usuario.
+
+        Parameters:
+            email (str): Correo electrónico.
+            password (str): Contraseña en texto plano.
+
+        Returns:
+            Optional[User]: Instancia del usuario si las credenciales son correctas; None si no.
+        """
         try:
             connection = get_connection()
             cursor = connection.cursor(pymysql.cursors.DictCursor)
@@ -111,30 +128,40 @@ class User(UserMixin):
         
 
     # Metodo para obtener un usuario por su ID
-    def get_by_id(id):
-            try:
-                connection = get_connection()
-                cursor = connection.cursor(pymysql.cursors.DictCursor)
+    @staticmethod
+    def get_by_id(id: int) -> Optional['User']:
+        """
+        Obtiene un usuario por su ID. Requerido por Flask-Login.
+
+        Parameters:
+            id (int): ID del usuario.
+
+        Returns:
+            Optional[User]: Instancia del usuario si existe; None si no.
+        """
+        try:
+            connection = get_connection()
+            cursor = connection.cursor(pymysql.cursors.DictCursor)
                 
-                sql = "SELECT id, name, email, password, profile, is_active FROM user WHERE id = %s"
-                cursor.execute(sql, (id,))
+            sql = "SELECT id, name, email, password, profile, is_active FROM user WHERE id = %s"
+            cursor.execute(sql, (id,))
 
-                user = cursor.fetchone()
+            user = cursor.fetchone()
                 
-                cursor.close()
-                connection.close()
+            cursor.close()
+            connection.close()
 
-                if user:
-                    return User(
-                        user["id"],
-                        user["name"],
-                        user["email"],
-                        user["password"],
-                        user["profile"],
-                        user["is_active"]
-                    )
+            if user:
+                return User(
+                    user["id"],
+                    user["name"],
+                    user["email"],
+                    user["password"],
+                    user["profile"],
+                    user["is_active"]
+                )
 
-                return None
-            except Exception as ex:
-                print(f"Error login user:{ex}")
-                return False
+            return None
+        except Exception as ex:
+            print(f"Error login user:{ex}")
+            return False
